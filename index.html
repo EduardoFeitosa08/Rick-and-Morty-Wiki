@@ -8,6 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300..800;1,300..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./style.css">
+    <script src="./app.js" type="module" defer></script>
     <title>Rick And Morty Wiki</title>
 </head>
 <body>
@@ -25,8 +26,8 @@
     </div>
     <main>
         <section class="search-section">
-            <input type="text" placeholder="Digite o nome do personagem">
-            <button>Search</button>
+            <input id="inputPersonagem" type="text" placeholder="Digite o nome do personagem">
+            <button id="btnSearch" >Search</button>
         </section>
         <section class="characters-section">
             <div class="characters">
@@ -67,7 +68,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="show-characters">
+                <div id="showCharacters" class="show-characters">
                     <!-- <div>
                         <img src="./img/img-1.jpeg" alt="">
                         <h4>Rick Sanchez</h4>
@@ -119,11 +120,11 @@
                 </div>
             </div>
             <div class="switch-pages">
-                <a href="#">1</a>
+                <!-- <a href="#">1</a>
                 <a href="#">2</a>
                 <a href="#">3</a>
                 <a href="#">4...</a>
-                <a href="#">42</a>
+                <a href="#">42</a> -->
             </div>
         </section>
         <section class="credits-section">

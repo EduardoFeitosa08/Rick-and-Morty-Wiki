@@ -142,6 +142,11 @@ main{
     align-items: center;
 }
 
+.status-filter a{
+    text-align: center;
+    font-size: 10px;
+}
+
 .show-characters{
     display: flex;
     flex-wrap: wrap;
@@ -159,6 +164,7 @@ main{
 
 .show-characters img{
     border-radius: 5px 5px 0 0;
+    cursor: pointer;
 }
 
 .show-characters h4{
@@ -230,4 +236,69 @@ main{
 
 /*Página do Personagem Individual*/
 
+.solo-character-section{
+    display: flex;
+    justify-content: space-evenly;
+    padding-block: 5%;
+}
 
+.solo-character-section img{
+    width: 30%;
+    height: auto;
+    border: 10px solid #4A4A4A;
+    border-radius: 10px;
+}
+
+.character-info{
+    color: white;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    font-size: 18px;
+    width: 35%;
+}
+
+.other-characters-section{
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    padding: 3% 2%;
+    border-top: 5px solid #AFABAB;
+    color: white;
+}
+
+.other-characters-section h2{
+    padding-left: 2%;
+    font-size: 25px;
+}
+
+.scroll-img{
+    display: flex;
+    gap: 30px;
+    overflow-x: scroll;
+    padding-bottom: 1%;
+}
+
+.scroll-img div{
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1px solid black;
+    border-radius: 5px;
+    width: 20%;
+}
+
+.scroll-img img{
+    border-radius: 5px 5px 0 0;
+}
+
+.scroll-img h4{
+    width: 100%;
+    height: 100%;
+    place-self: center;
+    background-color: rgb(217, 217, 217, .5);
+    text-align: center;
+    border-radius: 0 0 5px 5px;
+    padding-block: 15px;
+    font-size: 20px;
+}
