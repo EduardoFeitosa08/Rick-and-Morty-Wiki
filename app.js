@@ -1,5 +1,6 @@
 'use strict'
 
+const sectionCharacter = document.getElementById('sectionCharacter')
 const container = document.getElementById('showCharacters')
 const inputPersonagem = document.getElementById('inputPersonagem')
 const btnSearch = document.getElementById('btnSearch')
@@ -17,6 +18,14 @@ const btnGenderUnknown = document.getElementById('btnGenderUnknown')
 
 async function buscarTodosPersonagens() {
     const url = 'https://rickandmortyapi.com/api/character'
+    const response = await fetch(url)
+    const imagens = await response.json()
+    // console.log(imagens)
+    return imagens
+}
+
+async function buscarPersonagemById(id) {
+    const url = `https://rickandmortyapi.com/api/character/${id}`
     const response = await fetch(url)
     const imagens = await response.json()
     // console.log(imagens)
@@ -55,32 +64,65 @@ async function buscarPersonagemByGender(gender) {
     return imagens
 }
 
-async function carregarPersonagemSolo(personagem) {
-    const soloCharacterSection = document.getElementById('soloCharacterSection')
-    const template = `
-        <img src="${personagem.image}" alt="">
-        <div>
-            <h2>Name:</h2>
-            <p>${personagem.name}</p>
-        </div>
-        <div>
-            <h2>Status:</h2>
-            <p>${personagem.status}</p>
-        </div>
-        <div>
-            <h2>Gender:</h2>
-            <p>${personagem.gender}</p>
-        </div>
-        <div>
-            <h2>First seen in:</h2>
-            <p>${personagem.origin.name}</p>
-        </div>
-        <div>
-            <h2>Last seen in:</h2>
-            <p>${personagem.location.name}</p>
-        </div>`;
+function carregarPersonagemSolo(personagem){
+    const divInfo = document.createElement('div')
+    const img = document.createElement('img')
+    const divName = document.createElement('div')
+    const h2Name = document.createElement('h2')
+    const pName = document.createElement('p')
+    const divStatus = document.createElement('div')
+    const h2Status = document.createElement('h2')
+    const pStatus = document.createElement('p')
+    const divGender = document.createElement('div')
+    const h2Gender = document.createElement('h2')
+    const pGender = document.createElement('p')
+    const divFirstSeen = document.createElement('div')
+    const h2FirstSeen = document.createElement('h2')
+    const pFirstSeen = document.createElement('p')
+    const divLastSeen = document.createElement('div')
+    const h2LastSeen = document.createElement('h2')
+    const pLastSeen = document.createElement('p')
 
-        soloCharacterSection.innerHTML = template
+    sectionCharacter.textContent = ''
+    sectionCharacter.classList.remove('characters-section')
+    sectionCharacter.classList.add('solo-character-section')
+
+    img.src = personagem.image
+
+    h2Name.textContent = 'Name:'
+    pName.textContent = personagem.name
+
+    divName.append(h2Name, pName)
+    divInfo.append(divName)
+
+    divInfo.classList.add('character-info')
+    sectionCharacter.append(img, divInfo)
+
+    // <section id="soloCharacterSection" class="solo-character-section">
+    //         <!-- <img src="" alt=""> -->
+    //         <div class="character-info">
+    //             <!-- <div>
+    //                 <h2>Name:</h2>
+    //                 <p>Lorem ipsum</p>
+    //             </div>
+    //             <div>
+    //                 <h2>Status:</h2>
+    //                 <p>Lorem ipsum</p>
+    //             </div>
+    //             <div>
+    //                 <h2>Gender:</h2>
+    //                 <p>Lorem ipsum</p>
+    //             </div>
+    //             <div>
+    //                 <h2>First seen in:</h2>
+    //                 <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+    //             </div>
+    //             <div>
+    //                 <h2>Last seen in:</h2>
+    //                 <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
+    //             </div> -->
+    //         </div>
+    
 }
 
 async function carregarPersonagens(personagem) {
@@ -96,7 +138,10 @@ async function carregarPersonagens(personagem) {
     container.appendChild(div)
 
     img.addEventListener('click', async function(){
-        window.location.href = './character.html'
+        const personagemSelecionado = await buscarPersonagemById(personagem.id)
+        console.log(personagemSelecionado)
+        carregarPersonagemSolo(personagemSelecionado)
+
     })
 
 }
@@ -190,5 +235,4 @@ window.onload = async function(){
     const personagens = await buscarTodosPersonagens()
     personagens.results.forEach(carregarPersonagens)
     carregarPaginas(personagens)
-    personagens.results.forEach(carregarPersonagemSolo)
 }
