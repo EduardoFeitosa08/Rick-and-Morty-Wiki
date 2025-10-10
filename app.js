@@ -67,18 +67,23 @@ async function buscarPersonagemByGender(gender) {
 function carregarPersonagemSolo(personagem){
     const divInfo = document.createElement('div')
     const img = document.createElement('img')
+
     const divName = document.createElement('div')
     const h2Name = document.createElement('h2')
     const pName = document.createElement('p')
+
     const divStatus = document.createElement('div')
     const h2Status = document.createElement('h2')
     const pStatus = document.createElement('p')
+
     const divGender = document.createElement('div')
     const h2Gender = document.createElement('h2')
     const pGender = document.createElement('p')
+
     const divFirstSeen = document.createElement('div')
     const h2FirstSeen = document.createElement('h2')
     const pFirstSeen = document.createElement('p')
+
     const divLastSeen = document.createElement('div')
     const h2LastSeen = document.createElement('h2')
     const pLastSeen = document.createElement('p')
@@ -91,38 +96,28 @@ function carregarPersonagemSolo(personagem){
 
     h2Name.textContent = 'Name:'
     pName.textContent = personagem.name
-
     divName.append(h2Name, pName)
-    divInfo.append(divName)
+
+    h2Status.textContent = 'Status:'
+    pStatus.textContent = personagem.status
+    divStatus.append(h2Status, pStatus)
+
+    h2Gender.textContent = 'Gender:'
+    pGender.textContent = personagem.gender
+    divGender.append(h2Gender, pGender)
+
+    h2FirstSeen.textContent = 'First Seen in:'
+    pFirstSeen.textContent = personagem.origin.name
+    divFirstSeen.append(h2FirstSeen, pFirstSeen)
+
+    h2LastSeen.textContent = 'Last Seen in:'
+    pLastSeen.textContent = personagem.location.name
+    divLastSeen.append(h2LastSeen, pLastSeen)
+
+    divInfo.append(divName, divStatus, divGender, divFirstSeen, divLastSeen)
 
     divInfo.classList.add('character-info')
     sectionCharacter.append(img, divInfo)
-
-    // <section id="soloCharacterSection" class="solo-character-section">
-    //         <!-- <img src="" alt=""> -->
-    //         <div class="character-info">
-    //             <!-- <div>
-    //                 <h2>Name:</h2>
-    //                 <p>Lorem ipsum</p>
-    //             </div>
-    //             <div>
-    //                 <h2>Status:</h2>
-    //                 <p>Lorem ipsum</p>
-    //             </div>
-    //             <div>
-    //                 <h2>Gender:</h2>
-    //                 <p>Lorem ipsum</p>
-    //             </div>
-    //             <div>
-    //                 <h2>First seen in:</h2>
-    //                 <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-    //             </div>
-    //             <div>
-    //                 <h2>Last seen in:</h2>
-    //                 <p>Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,</p>
-    //             </div> -->
-    //         </div>
-    
 }
 
 async function carregarPersonagens(personagem) {
@@ -130,8 +125,8 @@ async function carregarPersonagens(personagem) {
     const img = document.createElement('img')
     const nome = document.createElement('h4')
 
-    img.src = await personagem.image
-    nome.textContent = await personagem.name
+    img.src = personagem.image
+    nome.textContent = personagem.name
 
     div.appendChild(img)
     div.appendChild(nome)
@@ -139,11 +134,135 @@ async function carregarPersonagens(personagem) {
 
     img.addEventListener('click', async function(){
         const personagemSelecionado = await buscarPersonagemById(personagem.id)
-        console.log(personagemSelecionado)
+        // console.log(personagemSelecionado)
         carregarPersonagemSolo(personagemSelecionado)
 
     })
 
+}
+
+async function carregarSectionPersonagens(personagem){
+    sectionCharacter.textContent = ''
+
+    const divCharacters = document.createElement('div')
+    const divCharactersFilters = document.createElement('div')
+    const h2FilterBy = document.createElement('h2')
+    const h3Status = document.createElement('h3')
+
+    const divStatusFilter = document.createElement('div')
+    const divStatusAlive = document.createElement('div')
+    const btnStatusAlive = document.createElement('button')
+    const pStatusAlive = document.createElement('p')
+
+    const divStatusDead = document.createElement('div')
+    const btnStatusDead = document.createElement('button')
+    const pStatusDead = document.createElement('p')
+
+    const divStatusUnknown = document.createElement('div')
+    const btnStatusUnknown = document.createElement('button')
+    const pStatusUnknown = document.createElement('p')
+
+    const h3Gender = document.createElement('h3')
+    const divGenderFilter = document.createElement('div')
+    const divMaleGender = document.createElement('div')
+    const btnMaleGender = document.createElement('button')
+    const pMaleGender = document.createElement('p')
+
+    const divFemaleGender = document.createElement('div')
+    const btnFemaleGender = document.createElement('button')
+    const pFemaleGender = document.createElement('p')
+
+    const divGenderless = document.createElement('div')
+    const btnGenderless = document.createElement('button')
+    const pGenderless = document.createElement('p')
+
+    const divUnknownGender = document.createElement('div')
+    const btnUnknownGender = document.createElement('button')
+    const pUnknownGender = document.createElement('p')
+
+    const divShowCharacters = document.createElement('div')
+    divShowCharacters.classList.add('show-characters')
+    divShowCharacters.id = 'showCharacters'
+
+    h2FilterBy.textContent = 'Filter By:'
+    h3Status.textContent = 'Status:'
+
+    btnStatusAlive.textContent = 'Alive'
+    btnStatusAlive.classList.add('btn_status')
+    pStatusAlive.textContent = 'Alive'
+    divStatusAlive.append(btnAlive, pStatusAlive)
+
+    btnStatusDead.textContent = 'Dead'
+    btnStatusDead.classList.add('btn_status')
+    pStatusDead.textContent = 'Dead'
+    divStatusDead.append(btnStatusDead, pStatusDead)
+
+    btnStatusUnknown.textContent = 'Unknown'
+    btnStatusUnknown.classList.add('btn_status')
+    pStatusUnknown.textContent = 'Unknown'
+    divStatusUnknown.append(btnStatusUnknown, pStatusUnknown)
+
+    divStatusFilter.classList.add('status-filter')
+    divStatusFilter.append(divStatusAlive, divStatusDead, divStatusUnknown)
+    
+
+    h3Gender.textContent = 'Gender:'
+
+    btnMaleGender.textContent = 'Male'
+    btnMaleGender.classList.add('btn_status')
+    pMaleGender.textContent = 'Male'
+    divMaleGender.append(btnMaleGender, pMaleGender)
+
+    btnFemaleGender.textContent = 'Female'
+    btnFemaleGender.classList.add('btn_status')
+    pFemaleGender.textContent = 'Female'
+    divFemaleGender.append(btnFemaleGender, pFemaleGender)
+
+    btnGenderless.textContent = 'Genderless'
+    btnGenderless.classList.add('btn_status')
+    pGenderless.textContent = 'Genderless'
+    divGenderless.append(btnGenderless, pGenderless)
+
+    btnUnknownGender.textContent = 'Unknown'
+    btnUnknownGender.classList.add('btn_status')
+    pUnknownGender.textContent = 'Unknown'
+    divUnknownGender.append(btnUnknownGender, pUnknownGender)
+
+    divGenderFilter.classList.add('status-filter')
+    divGenderFilter.append(divMaleGender, divFemaleGender, divGenderless, divUnknownGender)
+
+    divCharactersFilters.classList.add('characters-filters')
+    divCharactersFilters.append(h2FilterBy, h3Status ,divStatusFilter, h3Gender, divGenderFilter)
+
+    sectionCharacter.classList.remove('solo-character-section')
+    sectionCharacter.classList.add('characters-section')
+    
+
+    for(let i = 0; i < personagem.results.length; i++){
+        const personagem1 = personagem.results[i]
+
+        const div = document.createElement('div')
+        const img = document.createElement('img')
+        const nome = document.createElement('h4')
+
+        img.src = personagem1.image
+        nome.textContent = personagem1.name
+        div.append(img, nome)
+
+        img.addEventListener('click', async function(){
+            const personagemSelecionado = await buscarPersonagemById(personagem1.id)
+            // console.log(personagemSelecionado)
+            carregarPersonagemSolo(personagemSelecionado)
+
+        })
+
+        divShowCharacters.append(div)
+    }
+
+    divCharacters.classList.add('characters')
+    divCharacters.append(divCharactersFilters, divShowCharacters)
+
+    sectionCharacter.append(divCharacters)
 }
 
 function carregarPaginas(numPagina) {
@@ -166,6 +285,7 @@ inputPersonagem.addEventListener('keydown', async(evento) => {
         container.textContent = ''
         const imagens = await buscarPersonagemByName(inputPersonagem.value)
         imagens.results.forEach(carregarPersonagens)
+        carregarSectionPersonagens(imagens)
     }
 })
 
@@ -173,7 +293,9 @@ btnSearch.addEventListener('click', async function() {
     container.textContent = ''
     const imagens = await buscarPersonagemByName(inputPersonagem.value)
     imagens.results.forEach(carregarPersonagens)
+    carregarSectionPersonagens(imagens)
 })
+
 
 btnStatus.forEach(button => {
     button.addEventListener('click', async () =>{
