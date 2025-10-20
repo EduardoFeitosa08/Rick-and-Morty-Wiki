@@ -1,5 +1,9 @@
 'use strict'
 
+const logo = document.getElementById('logo')
+
+const main = document.getElementById('main')
+
 const sectionCharacter = document.getElementById('sectionCharacter')
 const container = document.getElementById('showCharacters')
 const inputPersonagem = document.getElementById('inputPersonagem')
@@ -15,6 +19,8 @@ const btnMale = document.getElementById('btnMale')
 const btnFemale = document.getElementById('btnFemale')
 const btnGenderless = document.getElementById('btnGenderless')
 const btnGenderUnknown = document.getElementById('btnGenderUnknown')
+
+const sectionCredits = document.getElementById('credits')
 
 async function buscarTodosPersonagens() {
     const url = 'https://rickandmortyapi.com/api/character'
@@ -64,7 +70,17 @@ async function buscarPersonagemByGender(gender) {
     return imagens
 }
 
-function carregarPersonagemSolo(personagem){
+async function carregarPersonagemSolo(personagem){
+
+    const scrollImgs = document.querySelector('.other-characters-section')
+    if(scrollImgs){
+        scrollImgs.remove()
+    }   
+    const creditsSection = document.querySelector('.credits-section')
+    if(creditsSection){
+        creditsSection.remove()
+    }
+
     const divInfo = document.createElement('div')
     const img = document.createElement('img')
 
@@ -87,6 +103,13 @@ function carregarPersonagemSolo(personagem){
     const divLastSeen = document.createElement('div')
     const h2LastSeen = document.createElement('h2')
     const pLastSeen = document.createElement('p')
+
+    const sectionScrollCharacters = document.createElement('section')
+    const h2OtherCharacters = document.createElement('h2')
+    const divScrollImg = document.createElement('div')
+
+    sectionCredits.remove()
+    
 
     sectionCharacter.textContent = ''
     sectionCharacter.classList.remove('characters-section')
@@ -118,6 +141,38 @@ function carregarPersonagemSolo(personagem){
 
     divInfo.classList.add('character-info')
     sectionCharacter.append(img, divInfo)
+
+    const personagens = await buscarTodosPersonagens()
+    personagens.results.forEach(function(personagem){
+        const div = document.createElement('div')
+        const imagem = document.createElement('img')
+        const nome = document.createElement('h4')
+
+        imagem.src = personagem.image
+        nome.textContent = personagem.name
+
+        div.appendChild(imagem)
+        div.appendChild(nome)
+        divScrollImg.appendChild(div)
+
+        imagem.addEventListener('click', async function(){
+            const personagemSelecionado = await buscarPersonagemById(personagem.id)
+            // console.log(personagemSelecionado)
+            carregarPersonagemSolo(personagemSelecionado)
+        })
+    })
+
+    h2OtherCharacters.textContent = 'Other Characters'
+    divScrollImg.classList.add('scroll-img')
+    sectionScrollCharacters.append(h2OtherCharacters, divScrollImg)
+    sectionScrollCharacters.classList.add('other-characters-section')
+    main.append(sectionScrollCharacters)
+
+    carregarCreditos()
+
+    img.addEventListener('click', function(){
+        window.open(personagem.image)
+    })
 }
 
 async function carregarPersonagens(personagem) {
@@ -280,12 +335,82 @@ function carregarPaginas(numPagina) {
     }
 }
 
+function carregarCreditos() {
+    const sectionCredits = document.createElement('section')
+    const divCredits = document.createElement('div')
+
+    const divTvShow = document.createElement('div')
+    const h3TvShow = document.createElement('h3')
+    const pTvShow = document.createElement('p')
+
+    const divApiDev = document.createElement('div')
+    const h3ApiDev = document.createElement('h3')
+    const pApiDev = document.createElement('p')
+
+    const divSocial = document.createElement('div')
+    const divSocialLinks = document.createElement('div')
+    const aGitHub = document.createElement('a')
+    const imgGitHub = document.createElement('img')
+    const aLinkedin = document.createElement('a')
+    const imgLinkedin = document.createElement('img')
+    const h4DevName = document.createElement('h4')
+    const spanDevName = document.createElement('span')
+
+    sectionCredits.textContent = ''
+
+    h3TvShow.textContent = 'Rick And Morty'
+    pTvShow.textContent = 'Rick and Morty is created by Justin Roiland and Dan Harmon for Adult Swim. The data and images are used without claim of ownership and belong to their respective owners.'
+    divTvShow.append(h3TvShow, pTvShow)
+
+    h3ApiDev.textContent = 'Api developed by'
+    pApiDev.textContent = 'Axel Fuhrmann a guy who likes to develop things and Talita, the "Rick and Morty data scientist" and hardcore fan.'
+    divApiDev.append(h3ApiDev, pApiDev)
+
+    divCredits.append(divTvShow, divApiDev)
+    divCredits.classList.add('credits')
+
+    imgGitHub.src = './img/GitHub.png'
+    imgLinkedin.src = './img/LinkedIn.png'
+
+    aGitHub.href = 'https://github.com/EduardoFeitosa08'
+    aGitHub.target = '_blank'
+    aGitHub.appendChild(imgGitHub)
+
+    aLinkedin.href = 'https://www.linkedin.com/in/eduardo-batista-ab0910366/'
+    aLinkedin.target = '_blank'
+    aLinkedin.appendChild(imgLinkedin)
+
+    divSocialLinks.append(aGitHub, aLinkedin)
+
+    spanDevName.textContent = '< >'
+    const devName = `by Eduardo Feitosa Batista`
+    h4DevName.append(spanDevName, devName)
+    divSocial.append(divSocialLinks, h4DevName)
+    divSocial.classList.add('social')
+
+    sectionCredits.append(divCredits, divSocial)
+    sectionCredits.classList.add('credits-section')
+    sectionCredits.id = 'credits'
+    main.appendChild(sectionCredits)
+
+}
+
+logo.addEventListener('click', async function() {
+    window.location.href = './index.html'
+})
+
 inputPersonagem.addEventListener('keydown', async(evento) => {
     if(evento.key === 'Enter' || evento.keyCode === 13){
         container.textContent = ''
         const imagens = await buscarPersonagemByName(inputPersonagem.value)
         imagens.results.forEach(carregarPersonagens)
         carregarSectionPersonagens(imagens)
+        
+        const scrollImgs = document.querySelector('.other-characters-section')
+        if(scrollImgs){
+            scrollImgs.remove()
+        }
+        
     }
 })
 
@@ -294,6 +419,11 @@ btnSearch.addEventListener('click', async function() {
     const imagens = await buscarPersonagemByName(inputPersonagem.value)
     imagens.results.forEach(carregarPersonagens)
     carregarSectionPersonagens(imagens)
+
+    const scrollImgs = document.querySelector('.other-characters-section')
+        if(scrollImgs){
+            scrollImgs.remove()
+    }
 })
 
 
