@@ -392,6 +392,11 @@ main{
         padding-left: 10%;
     }
 
+    .search-section input{
+        padding-left: 10px;
+        font-size: 15px;
+    }
+
     .solo-character-section{
         display: flex;
         flex-direction: column;
@@ -405,5 +410,25 @@ main{
 
     .scroll-img div{
         width: 40%;
+    }
+}
+
+@media(max-width: 480px){
+    .characters{
+        flex-direction: column;
+    }
+
+    .characters-filters{
+        padding-bottom: 5%;
+    }
+
+    .characters-filters div{
+        flex-direction: row;
+        gap: 10px;
+        font-size: 16px;
+        flex-wrap: wrap;
+    }
+
+    .show-characters{
     }
 }
